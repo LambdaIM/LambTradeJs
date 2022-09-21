@@ -1,0 +1,21 @@
+import { getTokenBySymbol,getTestcontract } from "./buildr/tokens";
+import { useABI_ERC20_Contract } from '../contacthelp/useContract.js';
+
+
+export function getERC20contract(library, account, chainID) {
+    console.log('getArtcontract');
+    const token = getTestcontract(chainID);
+    const GenArtContract = useABI_ERC20_Contract(library,
+        account,
+        token.address,
+        true);
+    return GenArtContract;
+
+}
+
+export async function contractName({ library, account, chainID}) {
+    const Artcontract = getERC20contract(library, account, chainID);
+    const info = await Artcontract.name();
+    return info;
+
+}

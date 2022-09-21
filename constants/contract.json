@@ -1,0 +1,12 @@
+{
+    "92001":{
+        "zoraFee": "0x0564C442CDfec508096F50BEc340dC581Da0ed61",
+        "zora": "0xE0DB4Bb9971AB1E8711f4077429C00EFbC63b7C2",
+        "erc20Helper": "0xD2FAE6F1d0aee281242ac346a03FfE1e6D2B2Da0",
+        "erc721Helper": "0x0c225C8c4cB3c6f5274da526897851e62Cc1B47d",
+        "royalty": "0xE613c142D54944037035332216eF8eF2b184df52",
+        "wETH": "0x39897464b7556A88117C3855a024e1752207279E",
+        "ask": "0x33E9284bD149aCAE3f1a6f9e88C8B82bdB54e762",
+        "offer": "0xeefcedfa35c816fdb55f4ce8d4979eddbd551bea"
+    }
+}

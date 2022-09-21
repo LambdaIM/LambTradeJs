@@ -1,0 +1,16 @@
+webpack的路径别名，相关定义在这里：
+
+resolve: {
+    // 自动补全的扩展名
+    extensions: ['.js', '.vue', '.json'],
+    // 默认路径代理
+    // 例如 import Vue from 'vue'，会自动到 'vue/dist/vue.common.js'中寻找
+    alias: {
+        '@': resolve('src'),
+        '@config': resolve('config'),
+        'vue$': 'vue/dist/vue.common.js'
+    }
+}
+
+
+const tx = await contract.safeTransferFrom(from, to, tokenId, amount, [], { gasLimit: 100000, nonce: nonce || undefined, });

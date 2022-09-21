@@ -1,0 +1,46 @@
+{
+  "name": "@webfans/alleriajssdk",
+  "version": "1.0.5",
+  "description": "",
+  "main": "contactLogic/index.js",
+  "scripts": {
+    "test": "npx mochapack --colors --webpack-config webpack.config.test.js test/**/**test.js  --timeout 20000 ",
+    "dev": "npx webpack serve",
+    "doc": "npx jsdoc contactLogic  -r README.md",
+    "build:web": "npx webpack -c webpack.config.js",
+    "build:node": "npx webpack -c webpack.config.node.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lambhub/AlleriaJSSDK.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lambhub/AlleriaJSSDK/issues"
+  },
+  "homepage": "https://github.com/lambhub/AlleriaJSSDK#readme",
+  "dependencies": {
+    "@ethersproject/address": "^5.6.1",
+    "@ethersproject/bignumber": "^5.6.2",
+    "@ethersproject/constants": "^5.6.1",
+    "@ethersproject/contracts": "^5.6.2",
+    "@ethersproject/providers": "^5.6.8",
+    "@walletconnect/web3-provider": "^1.8.0",
+    "@webfans/ethers-multicall": "^0.1.9",
+    "chai": "^4.3.6",
+    "dayjs": "^1.11.4",
+    "ethers": "^5.6.9",
+    "jsdoc": "^3.6.11",
+    "mocha": "^10.0.0",
+    "mochapack": "^2.1.4",
+    "underscore": "^1.13.4",
+    "webpack": "^4.46.0",
+    "webpack-dev-server": "^4.9.3",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^4.5.2",
+    "webpack-cli": "^4.10.0"
+  }
+}
