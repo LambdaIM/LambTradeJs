@@ -103,6 +103,28 @@ async function main(){
 
     })
 
+    document.querySelector("#createOrders").addEventListener('click',async function(){
+        console.log('- - -')
+        let value  =  utils.parseUnits('1') ;
+        let value2 = utils.parseUnits('2')  ;
+
+        let tokenID2 ="1000007";
+        value  = value.toString();
+        value2 = value2.toString();
+
+        let list=[{
+            nftAddress:nftaddress,tokenID,value
+        },{
+            nftAddress:nftaddress,tokenID:tokenID2,value:value2
+        }]
+
+        let res = await sdkobj.SellOrder.createOrders(list)
+        console.log(res)
+
+    })
+
+    //createOrders
+
     /***
      * /**
      * 读区余额

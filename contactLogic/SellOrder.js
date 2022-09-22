@@ -42,7 +42,28 @@ export default class SellOrder extends Base{
         let res = await AskContract.askForNFT(nftAddress, tokenId)
         return res;
     }
-   async creatOrders(nftAsks){
+   async createOrders(nftAsks){
+      if((nftAsks instanceof Array)==false){
+        throw new Error('The parameter needs to be an array')
+      }
+      console.log('createOrders')
+      let parameters=[]
+      nftAsks.forEach((item)=>{
+        parameters.push({
+            tokenContract:item.nftAddress,
+            tokenId:item.tokenID,
+            askPrice:item.value,
+            askCurrency: ZERO_ADDRESS,
+            sellerFundsRecipient:this.account,
+            findersFeeBps: 0
+        })
+
+      })
+
+
+
+
+
         /**
          * let ask2 = {
             tokenContract,
@@ -54,7 +75,7 @@ export default class SellOrder extends Base{
             }
         */
         let AskContract = this.getAskContract(false)
-        let res = await AskContract.createAsks(nftAsks)
+        let res = await AskContract.createAsks(parameters)
 
 
         return res;
