@@ -10,7 +10,8 @@ export default class SellOrder extends Base{
     }
 
   async  checkApprovalForModule(){
-       let res = await this.getZoraContract().userApprovals(this.account)
+       let askaddress = this.getAskContract(false).address
+       let res = await this.getZoraContract().isModuleApproved(this.account,askaddress)
        return res
 
     }
@@ -41,7 +42,17 @@ export default class SellOrder extends Base{
         let res = await AskContract.askForNFT(nftAddress, tokenId)
         return res;
     }
-    creatOrders(nftAsks){
+   async creatOrders(nftAsks){
+        /**
+         * let ask2 = {
+            tokenContract,
+            tokenId:,
+            askPrice:,
+            askCurrency: ZERO_ADDRESS,
+            sellerFundsRecipient:,
+            findersFeeBps: 0
+            }
+        */
         let AskContract = this.getAskContract(false)
         let res = await AskContract.createAsks(nftAsks)
 

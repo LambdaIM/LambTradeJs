@@ -91,8 +91,7 @@ export default class Base {
           return Contract;
       }
     }
-    getNftInterface(){
-        const tokenaddress = ask(this.chainID,this.contractConfig);
+    getNftInterface(tokenaddress){
         const Contract = useABI_NFT_Contract(this.library,
             this.account,
             tokenaddress,
