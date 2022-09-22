@@ -32,8 +32,8 @@ export default class SellOrder extends Base{
     }
   async  createOrder(nftAddress,tokenId,askPrice){
         let AskContract = this.getAskContract(false)
-        let res = await AskContract.creatAsk(nftAddress,tokenId,askPrice.toString(),
-        ZERO_ADDRESS,this.account)
+        let res = await AskContract.createAsk(nftAddress,tokenId,askPrice.toString(),
+        ZERO_ADDRESS,this.account,0)
         return res
 
     }

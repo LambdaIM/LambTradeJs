@@ -87,6 +87,22 @@ async function main(){
 
     })
 
+    document.querySelector("#createOrder").addEventListener('click',async function(){
+        console.log('- - -')
+        let value =utils.parseUnits('1') 
+        let res = await sdkobj.SellOrder.createOrder(nftaddress,tokenID,value)
+        console.log(res)
+
+    })
+
+    document.querySelector("#getOrder").addEventListener('click',async function(){
+        console.log('- - -')
+        let value =utils.parseUnits('1') 
+        let res = await sdkobj.SellOrder.getOrder(nftaddress,tokenID)
+        console.log(res)
+
+    })
+
     /***
      * /**
      * 读区余额
