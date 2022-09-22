@@ -1,6 +1,7 @@
 import moment from './moment'
 import { ethers } from 'ethers';
 import GasPrice from './GasPrice';
+import SellOrder from './sellorder';
 
 /**
  * sdk 的入口文件
@@ -29,6 +30,7 @@ export default class index{
         this.contractConfig=contractConfig;
         this.chainID = chainID;
         this.account= account;
+        this.SellOrder = new SellOrder(this.library,this.account,this.chainID,false,this.contractConfig)
         
         
     }

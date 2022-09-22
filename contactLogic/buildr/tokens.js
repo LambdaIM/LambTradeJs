@@ -41,10 +41,10 @@ export const royalty =(chainID,contractConfig)=>{
  return  getcontract(chainID, symbol,contractConfig)
 }
 
-export const royalty =(chainID,contractConfig)=>{
-  let symbol="royalty"
- return  getcontract(chainID, symbol,contractConfig)
-}
+// export const royalty =(chainID,contractConfig)=>{
+//   let symbol="royalty"
+//  return  getcontract(chainID, symbol,contractConfig)
+// }
 
 export const offer =(chainID,contractConfig)=>{
   let symbol="offer"

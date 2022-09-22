@@ -6,6 +6,7 @@ import ABI_ERC721TransferHelper from "../constants/abis/ERC721TransferHelper.jso
 import ABI_RoyaltyEngineV1 from "../constants/abis/RoyaltyEngineV1.json";
 import ABI_AsksV1 from "../constants/abis/AsksV1_1.json";
 import ABI_OffersV1 from "../constants/abis/OffersV1";
+import ABI_NFT from "../constants/abis/NFT.json";
 
 
 // returns null on errors
@@ -126,6 +127,22 @@ export function useABI_Offers_Contract(
     account,
     tokenAddress,
     ABI_OffersV1,
+    withSignerIfPossible
+  );
+}
+
+export function useABI_NFT_Contract(
+  library,
+  account,
+  tokenAddress,
+  withSignerIfPossible
+) {
+
+  return useContract(
+    library,
+    account,
+    tokenAddress,
+    ABI_NFT,
     withSignerIfPossible
   );
 }

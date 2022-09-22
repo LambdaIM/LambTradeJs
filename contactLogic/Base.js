@@ -1,6 +1,8 @@
 import { zora,zoraFee,erc721Helper,ask,royalty,offer } from "./buildr/tokens";
 import { useABI_Zora_Contract,useABI_ZoraFee_Contract,useABI_ERC721Helper_Contract,
-  useABI_Royalty_Contract,useABI_Asks_Contract ,useABI_Offers_Contract} from '../contacthelp/useContract.js';
+  useABI_Royalty_Contract,useABI_Asks_Contract ,useABI_Offers_Contract,
+  useABI_NFT_Contract
+} from '../contacthelp/useContract.js';
 import GasPrice from "./GasPrice";
 
 
@@ -61,5 +63,44 @@ export default class Base {
           return Contract;
       }
     }
+    getAskContract(isestimateGas) {
+        
+      const tokenaddress = ask(this.chainID,this.contractConfig);
+      const Contract = useABI_Asks_Contract(this.library,
+          this.account,
+          tokenaddress,
+          true);
+      
+      if(this.isestimateGas||isestimateGas){
+          return Contract.estimateGas;
+      }else{
+          return Contract;
+      }
+    }
+    getOffersContract(isestimateGas) {
+        
+      const tokenaddress = ask(this.chainID,this.contractConfig);
+      const Contract = useABI_Offers_Contract(this.library,
+          this.account,
+          tokenaddress,
+          true);
+      
+      if(this.isestimateGas||isestimateGas){
+          return Contract.estimateGas;
+      }else{
+          return Contract;
+      }
+    }
+    getNftInterface(){
+        const tokenaddress = ask(this.chainID,this.contractConfig);
+        const Contract = useABI_NFT_Contract(this.library,
+            this.account,
+            tokenaddress,
+            true);
+        
+        return Contract;
+    }
+
+    
   
 }
