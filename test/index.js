@@ -123,6 +123,69 @@ async function main(){
 
     })
 
+    document.querySelector("#fillorder").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.SellOrder.getOrder(nftaddress,tokenID)
+
+        let value  =  res.askPrice.toString() ;
+        
+        let res2 = await sdkobj.SellOrder.fillOrder(nftaddress,tokenID,value,res.askPrice.toString())
+        console.log(res2)
+
+    })
+
+    document.querySelector("#setApprovalForModulebuy").addEventListener('click',async function(){
+        console.log('- - -')
+        // let res = await sdkobj.SellOrder.setApprovalForModule()
+        let res = await sdkobj.BuyOrder.setApprovalForModule()
+        console.log(res)
+
+        
+    })
+
+    document.querySelector("#checkApprovalForModulebuy").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.BuyOrder.checkApprovalForModule()
+        console.log(res)
+        
+    })
+
+    document.querySelector("#setApprovalForHelperbuy").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.BuyOrder.setApprovalForHelper(nftaddress)
+        console.log(res)
+        
+    })
+
+    document.querySelector("#checkApprovalForHelperbuy").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.BuyOrder.checkApprovalForHelper(nftaddress)
+        console.log(res)
+    })
+
+    document.querySelector("#createOffer").addEventListener('click',async function(){
+        console.log('- - -')
+        let value  =  utils.parseUnits('22') ;
+        value = value.toString()
+        let res = await sdkobj.BuyOrder.createOffer(nftaddress,tokenID,value)
+
+
+        console.log(res)
+    })
+
+    document.querySelector("#getOffer").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.BuyOrder.getOffer(nftaddress,tokenID,1)
+
+
+        console.log(res)
+    })
+
+    //createOffer
+
+
+    //fillorder
+
     //createOrders
 
     /***

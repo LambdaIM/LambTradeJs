@@ -42,6 +42,45 @@ export default class SellOrder extends Base{
         let res = await AskContract.askForNFT(nftAddress, tokenId)
         return res;
     }
+    async fillOrder(nftAddress,tokenId){
+      let AskContract = this.getAskContract(false)
+      let orderInfo = await AskContract.askForNFT(nftAddress, tokenId)
+      let overrides = {value: orderInfo.askPrice.toString()      }
+
+      let res = await AskContract.fillAsk(
+        nftAddress,
+        tokenId,
+        orderInfo.askCurrency,
+        orderInfo.askPrice.toString(),
+        ZERO_ADDRESS, 
+        overrides)
+
+    return res
+
+    }
+   async fillOrders(nftorders){
+    let AskContract = this.getAskContract(false)
+    let overrides = {value: value}
+    if((nftorders instanceof Array)==false){
+      throw new Error('The parameter needs to be an array')
+    }
+    let List=[]
+    nftorders.forEach((item)=>{
+      List.push({
+        tokenContract: item.nftAddress,
+        tokenId: item.tokenId,
+        fillCurrency: ZERO_ADDRESS,
+        fillAmount: item.price,
+        finder: ZERO_ADDRESS
+      })
+
+    })
+
+    let res = await AskContract.fillAsks(List, overrides);
+    return res
+
+
+   }
    async createOrders(nftAsks){
       if((nftAsks instanceof Array)==false){
         throw new Error('The parameter needs to be an array')

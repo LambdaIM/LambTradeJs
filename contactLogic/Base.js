@@ -79,7 +79,7 @@ export default class Base {
     }
     getOffersContract(isestimateGas) {
         
-      const tokenaddress = ask(this.chainID,this.contractConfig);
+      const tokenaddress = offer(this.chainID,this.contractConfig);
       const Contract = useABI_Offers_Contract(this.library,
           this.account,
           tokenaddress,
