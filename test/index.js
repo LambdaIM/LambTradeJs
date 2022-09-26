@@ -102,6 +102,13 @@ async function main(){
         console.log(res)
 
     })
+    document.querySelector("#cancelorder").addEventListener('click',async function(){
+        console.log('- - -')
+        let value =utils.parseUnits('1') 
+        let res = await sdkobj.SellOrder.cancelOrder(nftaddress,tokenID)
+        console.log(res)
+
+    })
 
     document.querySelector("#createOrders").addEventListener('click',async function(){
         console.log('- - -')
@@ -188,6 +195,16 @@ async function main(){
 
         console.log(res)
     })
+
+    document.querySelector("#cancelorderbuy").addEventListener('click',async function(){
+        console.log('- - -')
+        console.log(nftaddress,tokenID,1)
+        let res = await sdkobj.BuyOrder.cancelOffer(nftaddress,tokenID,1)
+        console.log(res)
+
+    })
+
+    // cancelorderbuy
 
     //fillOffer
     //createOffer

@@ -58,6 +58,11 @@ export default class SellOrder extends Base{
     return res
 
     }
+    async cancelOrder(nftAddress,tokenId){
+      let AskContract = this.getAskContract(false)
+      let res = await AskContract.cancelAsk(nftAddress,tokenId);
+      return res
+    }
    async fillOrders(nftorders){
     let AskContract = this.getAskContract(false)
     let overrides = {value: value}

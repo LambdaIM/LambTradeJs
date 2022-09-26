@@ -31,13 +31,12 @@ export default class BuyOrder extends Base{
   
           return  res
       }
-    async createOffer(nftAddress,tokenId,offerPrice){
+    async createCollectionOffer(nftAddress,tokenId,offerPrice){
         console.log('createOffer')
         let OffersContract = this.getOffersContract(false)
         let overrides = { value: offerPrice.toString() }
-        let res = await OffersContract.createOffer(
+        let res = await OffersContract.createCollectionOffer(
             nftAddress,
-            tokenId,
             ZERO_ADDRESS,
             offerPrice,
             0, overrides
@@ -45,22 +44,22 @@ export default class BuyOrder extends Base{
         return res
 
     }
-    async getOffer(nftAddress,tokenId,offerId){
+    async getOffersCollection(nftAddress,tokenId,offerId){
         let OffersContract = this.getOffersContract(false)
-        const offerInfo = await OffersContract.offers(nftAddress, tokenId, offerId);
+        const offerInfo = await OffersContract.offersCollection(nftAddress, tokenId, offerId);
         return offerInfo
 
     }
-    async fillOffer(nftAddress,tokenId,offerId){
+    async fillCollectionOffer(nftAddress,tokenId,offerId){
         let OffersContract = this.getOffersContract(false)
-        const offerInfo = await OffersContract.offers(nftAddress, tokenId, offerId);
+        const offerInfo = await OffersContract.offersCollection(nftAddress, tokenId, offerId);
         console.log(nftAddress,
             tokenId,
             offerId,
             offerInfo.currency,
             offerInfo.amount.toString(),
             ZERO_ADDRESS)
-        let res = await OffersContract.fillOffer(
+        let res = await OffersContract.fillCollectionOffer(
             nftAddress,
             tokenId,
             offerId,
@@ -70,12 +69,6 @@ export default class BuyOrder extends Base{
         )
         return res
 
-    }
-
-    async cancelOffer(nftAddress,tokenId,offerId){
-        let OffersContract = this.getOffersContract(false)
-        let res = await OffersContract.cancelOffer(nftAddress,tokenId,offerId)
-        return res
     }
 
     
