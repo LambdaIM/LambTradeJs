@@ -101,6 +101,9 @@ let res2 = await sdkobj.SellOrder.fillOrder(nftaddress,tokenID,value,askPrice)
 ```
 
 ### 取消卖单
+```
+let res = await sdkobj.SellOrder.cancelOrder(nftaddress,tokenID)
+```
 
 
 ## 挂买单
@@ -138,4 +141,9 @@ let res = await sdkobj.BuyOrder.getOffer(nftaddress,tokenID,offerid)
 ### 匹配买单
 ```
 let res = await sdkobj.BuyOrder.fillOffer(nftaddress,tokenID,offerid)
+```
+
+### 取消卖单
+```
+let res = await sdkobj.BuyOrder.cancelOffer(nftaddress,tokenID,offerid)
 ```

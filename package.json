@@ -1,5 +1,5 @@
 {
-  "name": "@webfans/alleriajssdk",
+  "name": "@webfans/LambTradeJs",
   "version": "1.0.5",
   "description": "",
   "main": "contactLogic/index.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lambhub/AlleriaJSSDK.git"
+    "url": "git+https://github.com/LambdaIM/LambTradeJs.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lambhub/AlleriaJSSDK/issues"
+    "url": "https://github.com/LambdaIM/LambTradeJs/issues"
   },
-  "homepage": "https://github.com/lambhub/AlleriaJSSDK#readme",
+  "homepage": "https://github.com/LambdaIM/LambTradeJs#readme",
   "dependencies": {
     "@ethersproject/address": "^5.6.1",
     "@ethersproject/bignumber": "^5.6.2",
