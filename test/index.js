@@ -175,12 +175,21 @@ async function main(){
 
     document.querySelector("#getOffer").addEventListener('click',async function(){
         console.log('- - -')
-        let res = await sdkobj.BuyOrder.getOffer(nftaddress,tokenID,1)
+        let res = await sdkobj.BuyOrder.getOffer(nftaddress,tokenID,2)
+
+
+        console.log(res)
+    })
+    document.querySelector("#fillOffer").addEventListener('click',async function(){
+        console.log('- - -')
+        console.log(nftaddress,tokenID,1)
+        let res = await sdkobj.BuyOrder.fillOffer(nftaddress,tokenID,2)
 
 
         console.log(res)
     })
 
+    //fillOffer
     //createOffer
 
 

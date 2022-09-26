@@ -54,12 +54,18 @@ export default class BuyOrder extends Base{
     async fillOffer(nftAddress,tokenId,offerId){
         let OffersContract = this.getOffersContract(false)
         const offerInfo = await OffersContract.offers(nftAddress, tokenId, offerId);
+        console.log(nftAddress,
+            tokenId,
+            offerId,
+            offerInfo.currency,
+            offerInfo.amount.toString(),
+            ZERO_ADDRESS)
         let res = await OffersContract.fillOffer(
             nftAddress,
             tokenId,
             offerId,
             offerInfo.currency,
-            offerInfo.amount,
+            offerInfo.amount.toString(),
             ZERO_ADDRESS
         )
         return res
