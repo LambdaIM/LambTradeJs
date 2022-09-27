@@ -31,7 +31,7 @@ async function main(){
     let nftaddress = '0x394db89002043aBB7f979CBb82c492f01372C4EF'
     let nftContract = new ethers.Contract(nftaddress,Alleria,Signer)
 
-    let tokenID ="1000006";
+    let tokenID ="1000009";
 
     document.querySelector("#setApprovalForModule").addEventListener('click',async function(){
         console.log('- - -')
@@ -233,25 +233,36 @@ async function main(){
     document.querySelector("#createOfferCollection").addEventListener('click',async function(){
         console.log('- - -')
         let value  =  utils.parseUnits('22') ;
-        let res = await sdkobj.BuyCollectionOrder.createCollectionOffer(nftaddress,tokenID,value)
+        let res = await sdkobj.BuyCollectionOrder.createOfferList(nftaddress,tokenID,value)
         console.log(res)
     })
 
     document.querySelector("#fillOfferCollection").addEventListener('click',async function(){
         console.log('- - -')
         let offerid=3;
-        let res = await sdkobj.BuyCollectionOrder.fillCollectionOffer(nftaddress,tokenID,offerid)
+        let res = await sdkobj.BuyCollectionOrder.fillOfferList(nftaddress,tokenID,offerid)
         console.log(res)
     })
 
 
     document.querySelector("#getOfferCollection").addEventListener('click',async function(){
         console.log('- - -')
-        let offerid=2;
-        let res = await sdkobj.BuyCollectionOrder.getOffersCollection(nftaddress,offerid)
+        let offerid=1;
+        let res = await sdkobj.BuyCollectionOrder.getOfferList(nftaddress,offerid)
         console.log(res)
         
     })
+
+    document.querySelector("#cancelOfferCollection").addEventListener('click',async function(){
+        console.log('- - -')
+        let offerid=1;
+        let res = await sdkobj.BuyCollectionOrder.cancelOfferList(nftaddress,offerid)
+        console.log(res)
+        
+    })
+
+
+    //cancelOfferCollection
 
     // cancelorderbuy
 
