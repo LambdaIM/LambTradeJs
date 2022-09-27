@@ -204,6 +204,55 @@ async function main(){
 
     })
 
+    document.querySelector("#setApprovalForModuleCollection").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.BuyCollectionOrder.setApprovalForModule()
+        console.log(res)
+
+    })
+
+    document.querySelector("#checkApprovalForModuleCollection").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.BuyCollectionOrder.checkApprovalForModule()
+        console.log(res)
+    })
+
+    document.querySelector("#setApprovalForHelperCollection").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.BuyCollectionOrder.setApprovalForHelper(nftaddress)
+        console.log(res)
+    })
+
+
+    document.querySelector("#checkApprovalForHelperCollection").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.BuyCollectionOrder.checkApprovalForHelper(nftaddress)
+        console.log(res)
+    })
+
+    document.querySelector("#createOfferCollection").addEventListener('click',async function(){
+        console.log('- - -')
+        let value  =  utils.parseUnits('22') ;
+        let res = await sdkobj.BuyCollectionOrder.createCollectionOffer(nftaddress,tokenID,value)
+        console.log(res)
+    })
+
+    document.querySelector("#fillOfferCollection").addEventListener('click',async function(){
+        console.log('- - -')
+        let offerid=3;
+        let res = await sdkobj.BuyCollectionOrder.fillCollectionOffer(nftaddress,tokenID,offerid)
+        console.log(res)
+    })
+
+
+    document.querySelector("#getOfferCollection").addEventListener('click',async function(){
+        console.log('- - -')
+        let offerid=2;
+        let res = await sdkobj.BuyCollectionOrder.getOffersCollection(nftaddress,offerid)
+        console.log(res)
+        
+    })
+
     // cancelorderbuy
 
     //fillOffer
