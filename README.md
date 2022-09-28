@@ -147,3 +147,51 @@ let res = await sdkobj.BuyOrder.fillOffer(nftaddress,tokenID,offerid)
 ```
 let res = await sdkobj.BuyOrder.cancelOffer(nftaddress,tokenID,offerid)
 ```
+
+## 挂系列买单
+
+
+### 检测系统授权
+```
+let res = await sdkobj.BuyCollectionOrder.checkApprovalForModule()
+```
+
+### 设置系统授权
+```
+let res = await sdkobj.BuyCollectionOrder.setApprovalForHelper(nftaddress)
+```
+
+### 检测nft授权
+```
+let res = await sdkobj.BuyCollectionOrder.checkApprovalForHelper(nftaddress)
+```
+
+### 设置nft授权
+```
+let res = await sdkobj.BuyCollectionOrder.setApprovalForHelper(nftaddress)
+```
+
+### 创建系列买单
+```
+let res = await sdkobj.BuyCollectionOrder.createOfferList(nftaddress,tokenID,value)
+```
+
+### 获取系列买单
+```
+let res = await sdkobj.BuyCollectionOrder.getOfferList(nftaddress,offerid)
+```
+
+### 匹配系列买单
+
+```
+let res = await sdkobj.BuyCollectionOrder.fillOfferList(nftaddress,tokenID,offerid)
+```
+
+
+
+
+
+
+
+
+

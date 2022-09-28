@@ -99,6 +99,21 @@ export default class Base {
         
         return Contract;
     }
+    getRoyaltyContract(isestimateGas) {
+        
+        const tokenaddress = royalty(this.chainID,this.contractConfig);
+        const Contract = useABI_Royalty_Contract(this.library,
+            this.account,
+            tokenaddress,
+            true);
+        
+        if(this.isestimateGas||isestimateGas){
+            return Contract.estimateGas;
+        }else{
+            return Contract;
+        }
+      }
+    
 
     
   
