@@ -31,8 +31,8 @@ export default class BuyOrder extends Base{
   
           return  res
       }
-    async createCollectionOffer(nftAddress,tokenId,offerPrice){
-        console.log('createOffer')
+    async createOfferList(nftAddress,tokenId,offerPrice){
+        
         let OffersContract = this.getOffersContract(false)
         let overrides = { value: offerPrice.toString() }
         let res = await OffersContract.createCollectionOffer(
@@ -44,15 +44,15 @@ export default class BuyOrder extends Base{
         return res
 
     }
-    async getOffersCollection(nftAddress,tokenId,offerId){
+    async getOfferList(nftAddress,offerId){
         let OffersContract = this.getOffersContract(false)
-        const offerInfo = await OffersContract.offersCollection(nftAddress, tokenId, offerId);
+        const offerInfo = await OffersContract.offersCollection(nftAddress,  offerId);
         return offerInfo
 
     }
-    async fillCollectionOffer(nftAddress,tokenId,offerId){
+    async fillOfferList(nftAddress,tokenId,offerId){
         let OffersContract = this.getOffersContract(false)
-        const offerInfo = await OffersContract.offersCollection(nftAddress, tokenId, offerId);
+        const offerInfo = await OffersContract.offersCollection(nftAddress,  offerId);
         console.log(nftAddress,
             tokenId,
             offerId,
@@ -67,6 +67,12 @@ export default class BuyOrder extends Base{
             offerInfo.amount.toString(),
             ZERO_ADDRESS
         )
+        return res
+
+    }
+    async cancelOfferList(nftAddress,offerId){
+        let OffersContract = this.getOffersContract(false)
+        const res = await OffersContract.cancelOfferList(nftAddress,  offerId);
         return res
 
     }
