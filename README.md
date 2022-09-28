@@ -1,13 +1,13 @@
-# LambTradeJs
+# lambtradejs
 
 挂卖单和挂买单
 
-## 1 通过npm 或yarn 安装 @webfans/LambTradeJs
+## 1 通过npm 或yarn 安装 @webfans/lambtradejs
 ```
-npm install  @webfans/LambTradeJs
+npm install  @webfans/lambtradejs
 ```
 ```
-yarn add  @webfans/LambTradeJs
+yarn add  @webfans/lambtradejs
 ```
 ## 2 生成api文档
 ```
