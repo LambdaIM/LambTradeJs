@@ -3,6 +3,7 @@ import SDK from '../contactLogic/index'
 import { ethers,utils } from 'ethers';
 import MinterSetPrice from './MinterSetPrice.json'
 import Alleria from './Alleria.json'
+import {OrdersParameter} from '../contactLogic/Sellorder' 
 
 
 /**
@@ -119,14 +120,40 @@ async function main(){
         value  = value.toString();
         value2 = value2.toString();
 
-        let list=[{
-            nftAddress:nftaddress,tokenID,value
-        },{
-            nftAddress:nftaddress,tokenID:tokenID2,value:value2
-        }]
+        // let list=[{
+        //     nftAddress:nftaddress,tokenID,value
+        // },{
+        //     nftAddress:nftaddress,tokenID:tokenID2,value:value2
+        // }]
 
-        let res = await sdkobj.SellOrder.createOrders(list)
+        let pra = new OrdersParameter()
+        pra.add(nftaddress,tokenID,value)
+        pra.add(nftaddress,tokenID2,value2)
+
+        let res = await sdkobj.SellOrder.createOrders(pra)
         console.log(res)
+
+
+    })
+
+    
+    document.querySelector("#fillOrders").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.SellOrder.getOrder(nftaddress,tokenID)
+
+        let value  =  utils.parseUnits('1') ;
+        let value2 = utils.parseUnits('2')  ;
+
+        let tokenID2 ="1000007";
+        value  = value.toString();
+        value2 = value2.toString();
+        
+        let pra = new OrdersParameter()
+        pra.add(nftaddress,tokenID,value)
+        pra.add(nftaddress,tokenID2,value2)
+        
+        let res2 = await sdkobj.SellOrder.fillOrders(pra)
+        console.log(res2)
 
     })
 

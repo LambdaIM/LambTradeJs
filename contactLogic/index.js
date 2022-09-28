@@ -1,10 +1,10 @@
 import moment from './moment'
 import { ethers } from 'ethers';
 import GasPrice from './GasPrice';
-import SellOrder from './sellorder';
+import SellOrder from './Sellorder';
 import BuyOrder from './BuyOrder';
 import BuyCollectionOrder from './BuyCollectionOrder'
-
+import OrdersParameter from './Sellorder';
 /**
  * sdk 的入口文件
  * @module index
@@ -42,3 +42,6 @@ export default class index{
         
     }
 }
+
+
+

@@ -72,7 +72,7 @@ export default class BuyOrder extends Base{
     }
     async cancelOfferList(nftAddress,offerId){
         let OffersContract = this.getOffersContract(false)
-        const res = await OffersContract.cancelCollectionOffer(nftAddress,  offerId);
+        const res = await OffersContract.cancelOfferList(nftAddress,  offerId);
         return res
 
     }

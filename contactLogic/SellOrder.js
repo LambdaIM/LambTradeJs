@@ -1,5 +1,5 @@
 import Base from "./Base"
-
+import { BigNumber } from "ethers"
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 export default class SellOrder extends Base{
    async setApprovalForModule(){
@@ -63,51 +63,49 @@ export default class SellOrder extends Base{
       let res = await AskContract.cancelAsk(nftAddress,tokenId);
       return res
     }
-   async fillOrders(nftorders){
+   async fillOrders(ordersParameter){
     let AskContract = this.getAskContract(false)
-    let overrides = {value: value}
-    if((nftorders instanceof Array)==false){
-      throw new Error('The parameter needs to be an array')
+    
+    
+    if((ordersParameter instanceof OrdersParameter)==false){
+      throw new Error('The parameter needs to be OrdersParameter')
     }
+
+
+    let allValue=BigNumber.from("0")
     let List=[]
-    nftorders.forEach((item)=>{
+    ordersParameter.parameters.forEach((item)=>{
       List.push({
-        tokenContract: item.nftAddress,
+        tokenContract: item.tokenContract,
         tokenId: item.tokenId,
-        fillCurrency: ZERO_ADDRESS,
-        fillAmount: item.price,
+        fillCurrency: item.askCurrency,
+        fillAmount: item.askPrice,
         finder: ZERO_ADDRESS
       })
 
+      let askPrice=BigNumber.from(item.askPrice)
+      allValue=allValue.add(askPrice)
     })
+
+    let overrides = {value: allValue.toString()}
 
     let res = await AskContract.fillAsks(List, overrides);
     return res
 
 
    }
-   async createOrders(nftAsks){
-      if((nftAsks instanceof Array)==false){
-        throw new Error('The parameter needs to be an array')
+   async createOrders(ordersParameter){
+      if((ordersParameter instanceof OrdersParameter)==false){
+        throw new Error('The parameter needs to be OrdersParameter')
       }
       console.log('createOrders')
-      let parameters=[]
-      nftAsks.forEach((item)=>{
-        parameters.push({
-            tokenContract:item.nftAddress,
-            tokenId:item.tokenID,
-            askPrice:item.value,
-            askCurrency: ZERO_ADDRESS,
-            sellerFundsRecipient:this.account,
-            findersFeeBps: 0
-        })
+      let this_=this;
+      ordersParameter.parameters.forEach((item)=>{
+        item.sellerFundsRecipient = this_.account
 
       })
-
-
-
-
-
+      
+    
         /**
          * let ask2 = {
             tokenContract,
@@ -119,7 +117,7 @@ export default class SellOrder extends Base{
             }
         */
         let AskContract = this.getAskContract(false)
-        let res = await AskContract.createAsks(parameters)
+        let res = await AskContract.createAsks(ordersParameter.parameters)
 
 
         return res;
@@ -127,4 +125,21 @@ export default class SellOrder extends Base{
     
     
 
+}
+
+export class OrdersParameter{
+  constructor(){
+    this.parameters=[]
+  }
+  add(nftAddress,tokenID,price){
+    this.parameters.push({
+      tokenContract:nftAddress,
+      tokenId:tokenID,
+      askPrice:price,
+      askCurrency: ZERO_ADDRESS,
+      sellerFundsRecipient:"",
+      findersFeeBps: 0
+    })
+
+  }
 }
