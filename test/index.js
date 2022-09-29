@@ -3,7 +3,7 @@ import SDK from '../contactLogic/index'
 import { ethers,utils } from 'ethers';
 import MinterSetPrice from './MinterSetPrice.json'
 import Alleria from './Alleria.json'
-import {OrdersParameter} from '../contactLogic/Sellorder' 
+import {OrdersParameter} from '../contactLogic/SellOrder' 
 
 
 /**
