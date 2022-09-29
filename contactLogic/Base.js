@@ -113,6 +113,21 @@ export default class Base {
             return Contract;
         }
       }
+      async  setApprovalForHelper(nftAddress){
+        //nft Approval
+        let NftIO = this.getNftInterface(nftAddress)
+        let erc721Helperaddress = this.getErc721HelperContract(false).address
+        let res = await NftIO.setApprovalForAll(erc721Helperaddress, true)
+        return res;
+    }
+    async  checkApprovalForHelper(nftAddress){
+        //check nft Approval
+        let NftIO = this.getNftInterface(nftAddress)
+        let erc721Helperaddress = this.getErc721HelperContract(false).address
+        let res = await NftIO.isApprovedForAll(this.account,erc721Helperaddress)
+
+        return  res
+    }
     
 
     

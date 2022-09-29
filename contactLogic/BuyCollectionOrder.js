@@ -1,36 +1,8 @@
-import Base from "./Base"
+import BuyBase from "./BuyBase"
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-export default class BuyOrder extends Base{
-    async setApprovalForModule(){
-        let offeraddress = this.getOffersContract(false).address
-        let res = await this.getZoraContract().setApprovalForModule(offeraddress ,true)
-        return res;
-  
-      }
-  
-    async  checkApprovalForModule(){
-         let offeraddress = this.getOffersContract(false).address
-         let res = await this.getZoraContract().isModuleApproved(this.account,offeraddress)
-         return res
-  
-      }
-    async  setApprovalForHelper(nftAddress){
-          //nft Approval
-          let NftIO = this.getNftInterface(nftAddress)
-          let erc721Helperaddress = this.getErc721HelperContract(false).address
-          let res = await NftIO.setApprovalForAll(erc721Helperaddress, true)
-          return res;
-      }
-    async  checkApprovalForHelper(nftAddress){
-          //check nft Approval
-          let NftIO = this.getNftInterface(nftAddress)
-          let erc721Helperaddress = this.getErc721HelperContract(false).address
-          let res = await NftIO.isApprovedForAll(this.account,erc721Helperaddress)
-  
-          return  res
-      }
+export default class BuyOrder extends BuyBase{
     async createOfferList(nftAddress,tokenId,offerPrice){
         
         let OffersContract = this.getOffersContract(false)
