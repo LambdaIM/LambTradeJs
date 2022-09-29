@@ -4,7 +4,7 @@ import GasPrice from './GasPrice';
 import SellOrder from './SellOrder';
 import BuyOrder from './BuyOrder';
 import BuyCollectionOrder from './BuyCollectionOrder'
-import OrdersParameter from './SellOrder';
+
 /**
  * sdk 的入口文件
  * @module index
