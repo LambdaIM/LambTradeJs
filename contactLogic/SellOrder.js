@@ -15,25 +15,11 @@ export default class SellOrder extends Base{
        return res
 
     }
-  async  setApprovalForHelper(nftAddress){
-        //nft Approval
-        let NftIO = this.getNftInterface(nftAddress)
-        let erc721Helperaddress = this.getErc721HelperContract(false).address
-        let res = await NftIO.setApprovalForAll(erc721Helperaddress, true)
-        return res;
-    }
-  async  checkApprovalForHelper(nftAddress){
-        //check nft Approval
-        let NftIO = this.getNftInterface(nftAddress)
-        let erc721Helperaddress = this.getErc721HelperContract(false).address
-        let res = await NftIO.isApprovedForAll(this.account,erc721Helperaddress)
-
-        return  res
-    }
+  
   async  createOrder(nftAddress,tokenId,askPrice){
         let AskContract = this.getAskContract(false)
         let res = await AskContract.createAsk(nftAddress,tokenId,askPrice.toString(),
-        ZERO_ADDRESS,this.account,0)
+        this.Currency,this.account,0)
         return res
 
     }
@@ -65,7 +51,6 @@ export default class SellOrder extends Base{
     }
    async fillOrders(ordersParameter){
     let AskContract = this.getAskContract(false)
-    
     
     if((ordersParameter instanceof OrdersParameter)==false){
       throw new Error('The parameter needs to be OrdersParameter')
@@ -102,6 +87,7 @@ export default class SellOrder extends Base{
       let this_=this;
       ordersParameter.parameters.forEach((item)=>{
         item.sellerFundsRecipient = this_.account
+        item.askCurrency =this_.Currency
 
       })
       

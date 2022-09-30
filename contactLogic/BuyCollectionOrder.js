@@ -9,7 +9,7 @@ export default class BuyOrder extends BuyBase{
         let overrides = { value: offerPrice.toString() }
         let res = await OffersContract.createCollectionOffer(
             nftAddress,
-            ZERO_ADDRESS,
+            this.Currency,
             offerPrice,
             0, overrides
         )
