@@ -6,7 +6,11 @@ export default class SellOrder extends Base{
       let askaddress = this.getAskContract(false).address
       let res = await this.getZoraContract().setApprovalForModule(askaddress,true)
       return res;
-
+    }
+    async cancelApprovalForModule(){
+      let askaddress = this.getAskContract(false).address
+      let res = await this.getZoraContract().setApprovalForModule(askaddress,false)
+      return res;
     }
 
   async  checkApprovalForModule(){
@@ -15,25 +19,17 @@ export default class SellOrder extends Base{
        return res
 
     }
-  async  setApprovalForHelper(nftAddress){
-        //nft Approval
-        let NftIO = this.getNftInterface(nftAddress)
-        let erc721Helperaddress = this.getErc721HelperContract(false).address
-        let res = await NftIO.setApprovalForAll(erc721Helperaddress, true)
-        return res;
-    }
-  async  checkApprovalForHelper(nftAddress){
-        //check nft Approval
-        let NftIO = this.getNftInterface(nftAddress)
-        let erc721Helperaddress = this.getErc721HelperContract(false).address
-        let res = await NftIO.isApprovedForAll(this.account,erc721Helperaddress)
-
-        return  res
-    }
+  
   async  createOrder(nftAddress,tokenId,askPrice){
+        let isModuleApproval= await this.checkApprovalForModule();
+        let isnftApprove = await this.checkApprovalForHelper(nftAddress);
+        if(isModuleApproval==false||isnftApprove==false){
+          throw new Error('need  Module approve or nft approve')
+        }
+
         let AskContract = this.getAskContract(false)
         let res = await AskContract.createAsk(nftAddress,tokenId,askPrice.toString(),
-        ZERO_ADDRESS,this.account,0)
+        this.Currency,this.account,0)
         return res
 
     }
@@ -66,7 +62,6 @@ export default class SellOrder extends Base{
    async fillOrders(ordersParameter){
     let AskContract = this.getAskContract(false)
     
-    
     if((ordersParameter instanceof OrdersParameter)==false){
       throw new Error('The parameter needs to be OrdersParameter')
     }
@@ -98,12 +93,36 @@ export default class SellOrder extends Base{
       if((ordersParameter instanceof OrdersParameter)==false){
         throw new Error('The parameter needs to be OrdersParameter')
       }
-      console.log('createOrders')
+      let isModuleApproval= await this.checkApprovalForModule();
+      let nftApproveMap={}  
       let this_=this;
-      ordersParameter.parameters.forEach((item)=>{
+      let isnftsApprove=true;
+      // ordersParameter.parameters.forEach(async (item)=>{
+      //   item.sellerFundsRecipient = this_.account
+      //   item.askCurrency =this_.Currency
+      //   if(nftApproveMap[item.tokenContract]==undefined){
+      //     let isnftApprove = await this.checkApprovalForHelper(item.tokenContract);
+      //     nftApproveMap[item.tokenContract]=isnftApprove;
+      //   }
+      // })
+      for (let item of ordersParameter.parameters){
         item.sellerFundsRecipient = this_.account
+        item.askCurrency =this_.Currency
+        if(nftApproveMap[item.tokenContract]==undefined){
+          let isnftApprove = await this.checkApprovalForHelper(item.tokenContract);
+          nftApproveMap[item.tokenContract]=isnftApprove;
+        }
+      }
 
-      })
+      for(let key in nftApproveMap){
+        if(nftApproveMap[key]==false){
+          isnftsApprove = false
+        } 
+      }
+
+      if(isModuleApproval==false||isnftsApprove==false){
+        throw new Error('need  Module approve or nft approve')
+      }
       
     
         /**

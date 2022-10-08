@@ -32,7 +32,7 @@ async function main(){
     let nftaddress = '0x394db89002043aBB7f979CBb82c492f01372C4EF'
     let nftContract = new ethers.Contract(nftaddress,Alleria,Signer)
 
-    let tokenID ="1000009";
+    let tokenID ="1000016";
 
     document.querySelector("#setApprovalForModule").addEventListener('click',async function(){
         console.log('- - -')
@@ -285,6 +285,27 @@ async function main(){
         let offerid=1;
         let res = await sdkobj.BuyCollectionOrder.cancelOfferList(nftaddress,offerid)
         console.log(res)
+        
+    })
+
+    document.querySelector("#cancelApprovalForsell").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.SellOrder.cancelApprovalForModule()
+        console.log(res)
+        
+    })
+
+    document.querySelector("#cancelApprovalForbuy").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.BuyOrder.cancelApprovalForModule()
+        console.log(res)
+        
+    })
+
+    document.querySelector("#cancelApprovalFornft").addEventListener('click',async function(){
+        console.log('- - -')
+        let res = await sdkobj.BuyOrder.cancelApprovalForHelper(nftaddress)
+        
         
     })
 

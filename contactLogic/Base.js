@@ -4,8 +4,9 @@ import { useABI_Zora_Contract,useABI_ZoraFee_Contract,useABI_ERC721Helper_Contra
   useABI_NFT_Contract
 } from '../contacthelp/useContract.js';
 import GasPrice from "./GasPrice";
+import { utils } from 'ethers';
 
-
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 /**
  * Base 合约相关操作方法
@@ -20,6 +21,7 @@ export default class Base {
       this.isestimateGas=isestimateGas;
       this.GasPrice = new GasPrice(library, account, chainID)
       this.contractConfig=contractConfig;
+      this.Currency=ZERO_ADDRESS
     }
     getZoraContract(isestimateGas) {
         
@@ -112,7 +114,36 @@ export default class Base {
         }else{
             return Contract;
         }
-      }
+    }
+    async  setApprovalForHelper(nftAddress){
+        //nft Approval
+        let NftIO = this.getNftInterface(nftAddress)
+        let erc721Helperaddress = this.getErc721HelperContract(false).address
+        let res = await NftIO.setApprovalForAll(erc721Helperaddress, true)
+        return res;
+    }
+    async  cancelApprovalForHelper(nftAddress){
+        //nft Approval
+        let NftIO = this.getNftInterface(nftAddress)
+        let erc721Helperaddress = this.getErc721HelperContract(false).address
+        let res = await NftIO.setApprovalForAll(erc721Helperaddress, false)
+        return res;
+    }
+    async  checkApprovalForHelper(nftAddress){
+        //check nft Approval
+        let NftIO = this.getNftInterface(nftAddress)
+        let erc721Helperaddress = this.getErc721HelperContract(false).address
+        let res = await NftIO.isApprovedForAll(this.account,erc721Helperaddress)
+
+        return  res
+    }
+    setCurrency(Address){
+        //utils.isAddress
+        if(utils.isAddress(Address)==false){
+            throw new Error('need address Correct format')
+        }
+        this.Currency=Address;
+    }
     
 
     

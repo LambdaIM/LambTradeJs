@@ -187,6 +187,21 @@ let res = await sdkobj.BuyCollectionOrder.getOfferList(nftaddress,offerid)
 let res = await sdkobj.BuyCollectionOrder.fillOfferList(nftaddress,tokenID,offerid)
 ```
 
+### 授权关系
+Make Offer
+不需要授权
+
+Accept Offer
+授权offer模块
+nft对erc721授权
+
+List 
+授权ask模块
+nft对erc721授权
+
+Buy Now
+不需要授权
+
 
 
 
