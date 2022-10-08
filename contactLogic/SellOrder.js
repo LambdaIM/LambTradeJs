@@ -6,7 +6,11 @@ export default class SellOrder extends Base{
       let askaddress = this.getAskContract(false).address
       let res = await this.getZoraContract().setApprovalForModule(askaddress,true)
       return res;
-
+    }
+    async cancelApprovalForModule(){
+      let askaddress = this.getAskContract(false).address
+      let res = await this.getZoraContract().setApprovalForModule(askaddress,false)
+      return res;
     }
 
   async  checkApprovalForModule(){
@@ -17,6 +21,12 @@ export default class SellOrder extends Base{
     }
   
   async  createOrder(nftAddress,tokenId,askPrice){
+        let isModuleApproval= await this.checkApprovalForModule();
+        let isnftApprove = await this.checkApprovalForHelper(nftAddress);
+        if(isModuleApproval==false||isnftApprove==false){
+          throw new Error('need  Module approve or nft approve')
+        }
+
         let AskContract = this.getAskContract(false)
         let res = await AskContract.createAsk(nftAddress,tokenId,askPrice.toString(),
         this.Currency,this.account,0)
@@ -83,13 +93,36 @@ export default class SellOrder extends Base{
       if((ordersParameter instanceof OrdersParameter)==false){
         throw new Error('The parameter needs to be OrdersParameter')
       }
-      console.log('createOrders')
+      let isModuleApproval= await this.checkApprovalForModule();
+      let nftApproveMap={}  
       let this_=this;
-      ordersParameter.parameters.forEach((item)=>{
+      let isnftsApprove=true;
+      // ordersParameter.parameters.forEach(async (item)=>{
+      //   item.sellerFundsRecipient = this_.account
+      //   item.askCurrency =this_.Currency
+      //   if(nftApproveMap[item.tokenContract]==undefined){
+      //     let isnftApprove = await this.checkApprovalForHelper(item.tokenContract);
+      //     nftApproveMap[item.tokenContract]=isnftApprove;
+      //   }
+      // })
+      for (let item of ordersParameter.parameters){
         item.sellerFundsRecipient = this_.account
         item.askCurrency =this_.Currency
+        if(nftApproveMap[item.tokenContract]==undefined){
+          let isnftApprove = await this.checkApprovalForHelper(item.tokenContract);
+          nftApproveMap[item.tokenContract]=isnftApprove;
+        }
+      }
 
-      })
+      for(let key in nftApproveMap){
+        if(nftApproveMap[key]==false){
+          isnftsApprove = false
+        } 
+      }
+
+      if(isModuleApproval==false||isnftsApprove==false){
+        throw new Error('need  Module approve or nft approve')
+      }
       
     
         /**

@@ -7,6 +7,11 @@ export default class BuyBase extends Base{
         return res;
   
       }
+      async cancelApprovalForModule(){
+        let offeraddress = this.getOffersContract(false).address
+        let res = await this.getZoraContract().setApprovalForModule(offeraddress ,false)
+        return res;
+      }
   
     async  checkApprovalForModule(){
          let offeraddress = this.getOffersContract(false).address

@@ -23,14 +23,22 @@ export default class BuyOrder extends BuyBase{
 
     }
     async fillOfferList(nftAddress,tokenId,offerId){
+        let ismodelapprove = await this.checkApprovalForModule()
+        let isnftapprove = await this.checkApprovalForHelper(nftAddress)
+        
+        if(ismodelapprove==false||isnftapprove==false){
+            throw new Error('need module approve or nft approve  ')
+        }
         let OffersContract = this.getOffersContract(false)
         const offerInfo = await OffersContract.offersCollection(nftAddress,  offerId);
+        
         console.log(nftAddress,
             tokenId,
             offerId,
             offerInfo.currency,
             offerInfo.amount.toString(),
             ZERO_ADDRESS)
+
         let res = await OffersContract.fillCollectionOffer(
             nftAddress,
             tokenId,
