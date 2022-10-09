@@ -59,15 +59,17 @@ describe("sdk",function(){
             assert.equal(isnftapprove,false)
         })
          it("setapprove",async function(){
-             await SDK.SellOrder.setApprovalForModule()
-             await SDK.SellOrder.setApprovalForHelper(nftaddress)
+            let tx =  await SDK.SellOrder.setApprovalForModule()
+            await tx.wait([1])
+            let tx2 =   await SDK.SellOrder.setApprovalForHelper(nftaddress)
+            await tx2.wait([1])
          })
          it("after setapprove checkapprove",async function(){
             let isapprove = await SDK.SellOrder.checkApprovalForModule()
             console.log(isapprove)
-            assert.equal(isapprove,true)
+            assert.equal(isapprove,true,'isapprove')
             let isnftapprove = await SDK.SellOrder.checkApprovalForHelper(nftaddress)
-            assert.equal(isnftapprove,true)
+            assert.equal(isnftapprove,true,'isnftapprove')
         })
 
 
@@ -76,8 +78,10 @@ describe("sdk",function(){
     after(async function () {
         // runs once after the last test in this block
         // set apprrove to false 
-        await SDK.SellOrder.cancelApprovalForModule()
-        await SDK.SellOrder.cancelApprovalForHelper(nftaddress)
+       let tx1 = await SDK.SellOrder.cancelApprovalForModule()
+       await tx1.wait([1])
+       let tx2 =  await SDK.SellOrder.cancelApprovalForHelper(nftaddress)
+       await tx2.wait([1])
 
     });
 
