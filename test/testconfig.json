@@ -1,5 +1,6 @@
 {
     "PRIVATE_KEY":"00cf1a8e3e7f2757fd489dbd80ee55111c035cc9c6ed69406585f283b86c4df3",
     "rpcurl":"http://18.143.13.243:8545/",
-    "chianid":"92001"
+    "chianid":"92001",
+    "SUB_PRIVATE_KEY":"c82f89a61790610143978babb0da48ca57c6cadd10542990a7446ac58c8a1c9e"
 }

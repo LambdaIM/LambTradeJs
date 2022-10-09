@@ -13,13 +13,22 @@ describe("sdk",function(){
     let  RpcProvider =new ethers.providers.JsonRpcProvider(jsonurl)
     MAKER_WALLET=MAKER_WALLET.connect( RpcProvider)
 
+    let  MAKER_WALLET_sub = new ethers.Wallet(testconfig.SUB_PRIVATE_KEY);
+    MAKER_WALLET_sub=MAKER_WALLET_sub.connect( RpcProvider)
+
     let account = MAKER_WALLET.address
-    console.log(account)
+    console.log('account',account)
+    let sub_account = MAKER_WALLET_sub.address;
+    console.log('subaccount',sub_account)
+
     let Signer = MAKER_WALLET
 
     let SDK = new sdk(MAKER_WALLET,account,testconfig.chianid)
+    let subSDK = new sdk(MAKER_WALLET_sub,sub_account,testconfig.chianid)
+
     let nftaddress = '0x394db89002043aBB7f979CBb82c492f01372C4EF'
     let tokenID="";
+    let nftContract;
 
     before( async function () {
         // runs once before the first test in this block
@@ -27,7 +36,7 @@ describe("sdk",function(){
 
     let nftmintaddress = '0x6a20C503EC4EA2646aBd56E8607a7CAeEF8a1178';
     let Contract = new ethers.Contract(nftmintaddress,MinterSetPrice.abi,Signer)
-    let nftContract = new ethers.Contract(nftaddress,Alleria,Signer)
+     nftContract = new ethers.Contract(nftaddress,Alleria,Signer)
 
     let projectId = '1';
     let value =utils.parseUnits('30') 
@@ -47,6 +56,7 @@ describe("sdk",function(){
 
     console.log(data)
     tokenID=data[data.length-1];
+    console.log('tokenID',tokenID)
 
 
     });
@@ -70,6 +80,33 @@ describe("sdk",function(){
             assert.equal(isapprove,true,'isapprove')
             let isnftapprove = await SDK.SellOrder.checkApprovalForHelper(nftaddress)
             assert.equal(isnftapprove,true,'isnftapprove')
+        })
+        it("create sell order ",async function(){
+            let value =utils.parseUnits('1') 
+            let res = await SDK.SellOrder.createOrder(nftaddress,tokenID,value)
+            await res.wait([1])
+            let order  = await SDK.SellOrder.getOrder(nftaddress,tokenID)
+            let askPrice = order.askPrice.toString();
+            let seller = order.seller;
+            let askCurrency = order.askCurrency;
+
+            assert.equal(askPrice,value,'askPrice')
+            assert.equal(seller,account,'seller')
+            assert.equal(askCurrency,"0x0000000000000000000000000000000000000000","askCurrency")
+        })
+        it("fill sell order",async function(){
+            const num = await nftContract.balanceOf(account);
+            let res = await subSDK.SellOrder.fillOrder(nftaddress,tokenID)
+            await res.wait([1])
+            const num2 = await nftContract.balanceOf(account);
+            
+            assert.equal(num-num2,1,'fill nft')
+            let order  = await SDK.SellOrder.getOrder(nftaddress,tokenID)
+            
+            assert.equal(order.seller,"0x0000000000000000000000000000000000000000",'askPrice')
+            
+
+
         })
 
 
