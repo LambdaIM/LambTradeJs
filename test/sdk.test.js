@@ -28,6 +28,7 @@ describe("sdk",function(){
 
     let nftaddress = '0x394db89002043aBB7f979CBb82c492f01372C4EF'
     let tokenID="";
+    let tokenID2=""
     let nftContract;
 
     before( async function () {
@@ -45,6 +46,9 @@ describe("sdk",function(){
     let res = await Contract.purchase(projectId,{value:value})
 
     res.wait([0])
+    let res2 = await Contract.purchase(projectId,{value:value})
+
+    res2.wait([0])
 
     const num = await nftContract.balanceOf(account);
     let data=[]
@@ -57,6 +61,8 @@ describe("sdk",function(){
     console.log(data)
     tokenID=data[data.length-1];
     console.log('tokenID',tokenID)
+    tokenID2 = data[data.length-2]
+
 
 
     });
@@ -104,10 +110,19 @@ describe("sdk",function(){
             let order  = await SDK.SellOrder.getOrder(nftaddress,tokenID)
             
             assert.equal(order.seller,"0x0000000000000000000000000000000000000000",'askPrice')
-            
+        })
 
+        it("cancel sell order  ",async function(){
+            let value =utils.parseUnits('1') 
+            let res = await SDK.SellOrder.createOrder(nftaddress,tokenID2,value)
+            await res.wait([1])
+            let res2 = await SDK.SellOrder.cancelOrder(nftaddress,tokenID2);
+            await res2.wait([1])
+            let order  = await SDK.SellOrder.getOrder(nftaddress,tokenID2)
+            assert.equal(order.seller,"0x0000000000000000000000000000000000000000",'askPrice')
 
         })
+
 
 
 
