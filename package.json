@@ -4,7 +4,7 @@
   "description": "",
   "main": "contactLogic/index.js",
   "scripts": {
-    "test": "npx mochapack --colors --webpack-config webpack.config.test.js test/**/**test.js  --timeout 20000 ",
+    "test": "npx mochapack --colors --webpack-config webpack.config.test.js test/**/**test.js  --timeout 40000 ",
     "dev": "npx webpack serve",
     "doc": "npx jsdoc contactLogic  -r README.md",
     "build:web": "npx webpack -c webpack.config.js",

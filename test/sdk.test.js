@@ -4,6 +4,7 @@ import {ethers,utils} from 'ethers'
 var assert = chai.assert;  
 import MinterSetPrice from './MinterSetPrice.json'
 import Alleria from './Alleria.json'
+import {OrdersParameter} from '../contactLogic/SellOrder'
 
 describe("sdk",function(){
     let testconfig = require("./testconfig.json")
@@ -30,6 +31,8 @@ describe("sdk",function(){
     let tokenID="";
     let tokenID2=""
     let nftContract;
+    let tokenID3="";
+    let tokenID4="";
 
     before( async function () {
         // runs once before the first test in this block
@@ -45,10 +48,21 @@ describe("sdk",function(){
         
     let res = await Contract.purchase(projectId,{value:value})
 
-    res.wait([0])
+   
     let res2 = await Contract.purchase(projectId,{value:value})
 
-    res2.wait([0])
+    
+
+    let res3 = await Contract.purchase(projectId,{value:value})
+
+    
+
+    let res4 = await Contract.purchase(projectId,{value:value})
+
+    
+    let res5 = await Contract.purchase(projectId,{value:value})
+
+    await res5.wait([1])
 
     const num = await nftContract.balanceOf(account);
     let data=[]
@@ -62,6 +76,8 @@ describe("sdk",function(){
     tokenID=data[data.length-1];
     console.log('tokenID',tokenID)
     tokenID2 = data[data.length-2]
+    tokenID3 = data[data.length-3]
+    tokenID4 = data[data.length-4]
 
 
 
@@ -122,6 +138,44 @@ describe("sdk",function(){
             assert.equal(order.seller,"0x0000000000000000000000000000000000000000",'askPrice')
 
         })
+
+        it("create orders and fill orders ", async function(){
+            //tokenID3 tokenID4
+            let value  =  utils.parseUnits('1') ;
+            let value2 = utils.parseUnits('2')  ;
+    
+            
+            value  = value.toString();
+            value2 = value2.toString();
+    
+            let pra = new OrdersParameter()
+            pra.add(nftaddress,tokenID3,value)
+            pra.add(nftaddress,tokenID4,value2)
+    
+            let res = await SDK.SellOrder.createOrders(pra)
+            await res.wait([1])
+
+            let order3  = await SDK.SellOrder.getOrder(nftaddress,tokenID3)
+            let order4  = await SDK.SellOrder.getOrder(nftaddress,tokenID4)
+
+            assert.notEqual(order3.seller,"0x0000000000000000000000000000000000000000",'create orders1 ')
+            assert.notEqual(order4.seller,"0x0000000000000000000000000000000000000000",'create orders2 ')
+
+            let resfill = await subSDK.SellOrder.fillOrders(pra);
+            await resfill.wait([1]);
+
+             order3  = await SDK.SellOrder.getOrder(nftaddress,tokenID3)
+             order4  = await SDK.SellOrder.getOrder(nftaddress,tokenID4)
+
+            assert.equal(order3.seller,"0x0000000000000000000000000000000000000000",'create orders1 ')
+            assert.equal(order4.seller,"0x0000000000000000000000000000000000000000",'create orders2 ')
+
+
+    
+        })
+
+
+
 
 
 
