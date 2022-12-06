@@ -17,12 +17,12 @@ export const getcontract = (chainID, symbol,contractConfig) => {
 };
 
 export const zoraFee =(chainID,contractConfig)=>{
-       let symbol="zoraFee"
+       let symbol="zeusFee"
       return  getcontract(chainID, symbol,contractConfig)
 }
 
 export const zora =(chainID,contractConfig)=>{
-  let symbol="zora"
+  let symbol="zeus"
  return  getcontract(chainID, symbol,contractConfig)
 }
 
